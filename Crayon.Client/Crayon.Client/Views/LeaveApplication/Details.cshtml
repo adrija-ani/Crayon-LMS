@@ -1,0 +1,78 @@
+@using Crayon.Entity.Common
+@using Crayon.Entity.Dto
+@model Result<LeaveApplicationResponse>
+
+@{
+    ViewData["Title"] = "Leave Application";
+}
+
+<div class="page-header">
+    <h2>Leave Application</h2>
+    <a asp-action="Index" class="btn btn-secondary">Back</a>
+</div>
+
+@if (Model?.Response != null)
+{
+    <div class="card">
+        <div class="card-body">
+
+            <div class="detail-row">
+                <span class="detail-label">Employee</span>
+                <span class="detail-value">@Model.Response.EmployeeName</span>
+            </div>
+
+            <div class="detail-row">
+                <span class="detail-label">Leave Type</span>
+                <span class="detail-value">@Model.Response.LeaveName</span>
+            </div>
+
+            <div class="detail-row">
+                <span class="detail-label">From</span>
+                <span class="detail-value">@Model.Response.FromDate.ToString("dd MMM yyyy")</span>
+            </div>
+
+            <div class="detail-row">
+                <span class="detail-label">To</span>
+                <span class="detail-value">@Model.Response.ToDate.ToString("dd MMM yyyy")</span>
+            </div>
+
+            <div class="detail-row">
+                <span class="detail-label">Total Days</span>
+                <span class="detail-value">@Model.Response.TotalDays</span>
+            </div>
+
+            <div class="detail-row">
+                <span class="detail-label">Reason</span>
+                <span class="detail-value">@Model.Response.Reason</span>
+            </div>
+
+            <div class="detail-row">
+                <span class="detail-label">Applied On</span>
+                <span class="detail-value">@Model.Response.AppliedDate.ToString("dd MMM yyyy")</span>
+            </div>
+
+            <div class="detail-row">
+                <span class="detail-label">Status</span>
+                <span class="detail-value">
+                    @{
+                        var badgeClass = Model.Response.Status switch
+                        {
+                            "Approved"  => "bg-success",
+                            "Rejected"  => "bg-danger",
+                            "Cancelled" => "bg-secondary",
+                            _           => "bg-warning text-dark"
+                        };
+                    }
+                    <span class="badge @badgeClass">@Model.Response.Status</span>
+                </span>
+            </div>
+
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-danger">
+        @(Model?.Error?.FirstOrDefault()?.ErrorMessage ?? "Leave application not found.")
+    </div>
+}

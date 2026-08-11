@@ -1,0 +1,48 @@
+@model Crayon.Entity.Dto.UserRequest
+
+@{
+    ViewData["Title"] = "Sign In";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="auth-card">
+
+    <div class="auth-brand">Crayon <span>HR</span></div>
+    <p class="auth-sub">Sign in to your account</p>
+
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 mb-3 d-none"></div>
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger py-2 mb-3">
+            @ViewBag.Error
+        </div>
+    }
+
+    <form asp-action="Login" method="post">
+
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input asp-for="Email"
+                   class="form-control"
+                   placeholder="you@example.com"
+                   autocomplete="email" />
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label">Password</label>
+            <input asp-for="Password"
+                   type="password"
+                   class="form-control"
+                   placeholder="••••••••"
+                   autocomplete="current-password" />
+        </div>
+
+        <button type="submit"
+                class="btn btn-primary w-100">
+            Sign in
+        </button>
+
+    </form>
+
+</div>

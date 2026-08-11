@@ -1,0 +1,45 @@
+@model Crayon.Entity.Dto.ProjectRequest
+
+@{
+    ViewData["Title"] = "Create Project";
+}
+
+<h2>Create Project</h2>
+
+<form asp-action="Create"
+      method="post">
+
+    <div class="mb-3">
+
+        <label class="form-label">
+            Project Name
+        </label>
+
+        <input asp-for="ProjectName"
+               class="form-control" />
+
+    </div>
+
+    <div class="mb-3">
+
+        <label class="form-label">
+            Description
+        </label>
+
+        <textarea asp-for="Description"
+                  rows="4"
+                  class="form-control"></textarea>
+
+    </div>
+
+    <button type="submit"
+            class="btn btn-success">
+        Save
+    </button>
+
+    <a asp-action="Index"
+       class="btn btn-secondary">
+        Cancel
+    </a>
+
+</form>

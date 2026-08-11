@@ -1,0 +1,24 @@
+﻿@model Crayon.Entity.Common.Result<Crayon.Entity.Dto.DepartmentResponse>
+
+<h2>Department Details</h2>
+
+<div class="card p-3">
+
+    <p>
+        <strong>Department Id:</strong>
+        @Model.Response.DepartmentId
+    </p>
+
+    <p>
+        <strong>Department Name:</strong>
+        @Model.Response.DepartmentName
+    </p>
+
+</div>
+
+<br />
+
+<a asp-action="Index"
+   class="btn btn-secondary">
+    Back
+</a>

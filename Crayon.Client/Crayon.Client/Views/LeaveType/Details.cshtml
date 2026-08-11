@@ -1,0 +1,27 @@
+﻿@model Crayon.Entity.Common.Result<Crayon.Entity.Dto.LeaveTypeResponse>
+
+<h2>Leave Type Details</h2>
+
+<table class="table table-bordered">
+
+    <tr>
+        <th>ID</th>
+        <td>@Model.Response.LeaveTypeId</td>
+    </tr>
+
+    <tr>
+        <th>Leave Name</th>
+        <td>@Model.Response.LeaveName</td>
+    </tr>
+
+    <tr>
+        <th>Default Days</th>
+        <td>@Model.Response.DefaultDays</td>
+    </tr>
+
+</table>
+
+<a asp-action="Index"
+   class="btn btn-secondary">
+    Back
+</a>

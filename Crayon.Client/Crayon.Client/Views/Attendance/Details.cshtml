@@ -1,0 +1,45 @@
+﻿@using Crayon.Entity.Common
+@using Crayon.Entity.Dto
+
+@model Result<AttendanceResponse>
+
+<h2>Attendance Details</h2>
+
+<table class="table table-bordered">
+
+    <tr>
+        <th>Employee</th>
+        <td>@Model.Response.EmployeeName</td>
+    </tr>
+
+    <tr>
+        <th>Date</th>
+        <td>@Model.Response.AttendanceDate.ToShortDateString()</td>
+    </tr>
+
+    <tr>
+        <th>Check In</th>
+        <td>@Model.Response.CheckInTime</td>
+    </tr>
+
+    <tr>
+        <th>Check Out</th>
+        <td>@Model.Response.CheckOutTime</td>
+    </tr>
+
+    <tr>
+        <th>Hours Worked</th>
+        <td>@Model.Response.HoursWorked</td>
+    </tr>
+
+    <tr>
+        <th>Status</th>
+        <td>@Model.Response.AttendanceStatus</td>
+    </tr>
+
+</table>
+
+<a asp-action="Index"
+   class="btn btn-secondary">
+    Back
+</a>

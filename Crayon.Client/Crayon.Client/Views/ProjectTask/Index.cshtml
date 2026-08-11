@@ -1,0 +1,54 @@
+@model Crayon.Entity.Common.Result<List<Crayon.Entity.Dto.ProjectTaskResponse>>
+
+@{
+    ViewData["Title"] = "Project Tasks";
+}
+
+<div class="page-header">
+    <h2>Project Tasks</h2>
+    <a asp-action="Create" class="btn btn-primary">Add Task</a>
+</div>
+
+<div class="card">
+    <div class="card-body p-0">
+        <table class="table table-hover datatable w-100">
+            <thead>
+                <tr>
+                    <th>Task Name</th>
+                    <th>Project</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model?.Response != null)
+                {
+                    foreach (var item in Model.Response)
+                    {
+                        <tr>
+                            <td>@item.TaskName</td>
+                            <td>@item.ProjectName</td>
+                            <td>
+                                <a asp-action="Details"
+                                   asp-route-id="@item.ProjectTaskId"
+                                   class="btn btn-info btn-sm">
+                                    View
+                                </a>
+                                <a asp-action="Edit"
+                                   asp-route-id="@item.ProjectTaskId"
+                                   class="btn btn-warning btn-sm">
+                                    Edit
+                                </a>
+                                <a asp-action="Delete"
+                                   asp-route-id="@item.ProjectTaskId"
+                                   class="btn btn-danger btn-sm confirm-delete"
+                                   data-name="@item.ProjectName">
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

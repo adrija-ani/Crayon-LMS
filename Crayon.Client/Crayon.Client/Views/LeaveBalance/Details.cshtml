@@ -1,0 +1,38 @@
+﻿@using Crayon.Entity.Common
+@using Crayon.Entity.Dto
+
+@model Result<LeaveBalanceResponse>
+
+<h2>Leave Balance Details</h2>
+
+@if (Model?.Response != null)
+{
+    <table class="table table-bordered">
+
+        <tr>
+            <th>Leave Balance Id</th>
+            <td>@Model.Response.LeaveBalanceId</td>
+        </tr>
+
+        <tr>
+            <th>Employee</th>
+            <td>@Model.Response.EmployeeName</td>
+        </tr>
+
+        <tr>
+            <th>Leave Type</th>
+            <td>@Model.Response.LeaveName</td>
+        </tr>
+
+        <tr>
+            <th>Available Days</th>
+            <td>@Model.Response.AvailableDays</td>
+        </tr>
+
+    </table>
+}
+
+<a asp-action="Index"
+   class="btn btn-secondary">
+    Back
+</a>

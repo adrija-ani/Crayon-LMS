@@ -1,0 +1,39 @@
+@model Crayon.Entity.Common.Result<Crayon.Entity.Dto.ProjectTaskResponse>
+
+@{
+    ViewData["Title"] = "Task Details";
+}
+
+<h2>Task Details</h2>
+
+<div class="card p-3">
+
+    <p>
+        <strong>ID:</strong>
+        @Model.Response.ProjectTaskId
+    </p>
+
+    <p>
+        <strong>Task Name:</strong>
+        @Model.Response.TaskName
+    </p>
+
+    <p>
+        <strong>Project:</strong>
+        @Model.Response.ProjectName
+    </p>
+
+</div>
+
+<br />
+
+<a asp-action="Edit"
+   asp-route-id="@Model.Response.ProjectTaskId"
+   class="btn btn-warning">
+    Edit
+</a>
+
+<a asp-action="Index"
+   class="btn btn-secondary">
+    Back
+</a>

@@ -1,0 +1,116 @@
+@model Crayon.Entity.Dto.EmployeeRequest
+
+@{
+    ViewData["Title"] = "Add Employee";
+}
+
+<div class="page-header">
+    <h2>Add Employee</h2>
+    <a asp-action="Index" class="btn btn-secondary">Back</a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+
+        <div asp-validation-summary="All" class="alert alert-danger py-2 mb-3"></div>
+
+        <form asp-action="Create" method="post">
+
+            <div class="row g-3">
+
+                <div class="col-md-6">
+                    <label class="form-label">First Name</label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Last Name</label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Email</label>
+                    <input asp-for="Email" type="email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Password</label>
+                    <input asp-for="Password" type="password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Employee Code</label>
+                    <input asp-for="EmployeeCode" class="form-control" />
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Phone Number</label>
+                    <input asp-for="PhoneNumber" class="form-control" />
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Role</label>
+                    <select asp-for="RoleName"
+                            asp-items="ViewBag.Roles"
+                            class="form-select">
+                        <option value="">-- Select Role --</option>
+                    </select>
+                    <span asp-validation-for="RoleName" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Department</label>
+                    <select asp-for="DepartmentId"
+                            asp-items="ViewBag.Departments"
+                            class="form-select">
+                        <option value="">Select Department</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Designation</label>
+                    <select asp-for="DesignationId"
+                            asp-items="ViewBag.Designations"
+                            class="form-select">
+                        <option value="">Select Designation</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Workplace</label>
+                    <select asp-for="WorkplaceId"
+                            asp-items="ViewBag.Workplaces"
+                            class="form-select">
+                        <option value="">Select Workplace</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Reporting Manager</label>
+                    <select asp-for="ReportingManagerId"
+                            asp-items="ViewBag.Managers"
+                            class="form-select">
+                        <option value="">None</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="mt-4">
+                <button type="submit" class="btn btn-success px-4">
+                    Save Employee
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

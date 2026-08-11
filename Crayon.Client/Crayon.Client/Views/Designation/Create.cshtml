@@ -1,0 +1,42 @@
+﻿@model Crayon.Entity.Dto.DesignationRequest
+
+@{
+    ViewData["Title"] = "Create Designation";
+}
+
+<h2>Create Designation</h2>
+
+<form asp-action="Create" method="post">
+
+    <div class="mb-3">
+
+        <label asp-for="DesignationName"
+               class="form-label">
+        </label>
+
+        <input asp-for="DesignationName"
+               class="form-control" />
+
+        <span asp-validation-for="DesignationName"
+              class="text-danger">
+        </span>
+
+    </div>
+
+    <button type="submit"
+            class="btn btn-success">
+        Save
+    </button>
+
+    <a asp-action="Index"
+       class="btn btn-secondary">
+        Back
+    </a>
+
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,133 @@
+<div class="card mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <div>
+            <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:#94A3B8;margin-bottom:4px;">Today's Attendance</div>
+            <div id="aw-clock" style="font-size:1.5rem;font-weight:700;font-family:'SFMono-Regular','Courier New',monospace;color:#0F172A;"></div>
+        </div>
+        <span id="aw-badge" class="badge bg-secondary" style="font-size:.82rem;padding:.45em 1em;">Not Checked In</span>
+    </div>
+    <div class="card-body">
+        <div class="row text-center g-3 mb-4">
+            <div class="col-4">
+                <div class="attendance-stat-box">
+                    <div class="astat-label">Check-In</div>
+                    <div id="aw-ci" class="astat-value">--:--:--</div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="attendance-stat-box">
+                    <div class="astat-label">Check-Out</div>
+                    <div id="aw-co" class="astat-value">--:--:--</div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="attendance-stat-box">
+                    <div class="astat-label">Time Worked</div>
+                    <div id="aw-wt" class="astat-value text-primary">00:00:00</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="aw-err" class="alert alert-danger py-2 px-3 d-none mb-3"></div>
+
+        <div class="d-flex gap-2">
+            <button id="aw-btnIn" class="btn btn-success px-4">
+                <span id="aw-spIn" class="spinner-border spinner-border-sm d-none"></span>
+                Check In
+            </button>
+            <button id="aw-btnOut" class="btn btn-danger px-4" style="display:none;">
+                <span id="aw-spOut" class="spinner-border spinner-border-sm d-none"></span>
+                Check Out
+            </button>
+            <button id="aw-btnDone" class="btn btn-outline-primary px-4" style="display:none;" disabled>
+                &#10003; Attendance Completed
+            </button>
+        </div>
+    </div>
+</div>
+<script>
+(function () {
+    var _t = null, _sw = 0;
+    var $clk  = document.getElementById('aw-clock');
+    var $bdg  = document.getElementById('aw-badge');
+    var $ci   = document.getElementById('aw-ci');
+    var $co   = document.getElementById('aw-co');
+    var $wt   = document.getElementById('aw-wt');
+    var $err  = document.getElementById('aw-err');
+    var $in   = document.getElementById('aw-btnIn');
+    var $out  = document.getElementById('aw-btnOut');
+    var $done = document.getElementById('aw-btnDone');
+    var $sIn  = document.getElementById('aw-spIn');
+    var $sOut = document.getElementById('aw-spOut');
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+    function dur(s)  { return pad(Math.floor(s / 3600)) + ':' + pad(Math.floor(s % 3600 / 60)) + ':' + pad(s % 60); }
+    function fmt(ts) {
+        if (!ts) return '--:--:--';
+        var p = ts.split(':').map(Number);
+        var d = new Date(); d.setHours(p[0] || 0, p[1] || 0, Math.floor(p[2] || 0), 0);
+        return d.toLocaleTimeString();
+    }
+
+    function tick() { $clk.textContent = new Date().toLocaleTimeString(); }
+    tick(); setInterval(tick, 1000);
+
+    function startTimer(from) {
+        _sw = from || 0; $wt.textContent = dur(_sw);
+        clearInterval(_t);
+        _t = setInterval(function () { _sw++; $wt.textContent = dur(_sw); }, 1000);
+    }
+
+    function setState(s) {
+        if (s === 'checkedIn') {
+            $bdg.textContent = 'Checked In'; $bdg.className = 'badge bg-success';
+            $in.style.display = 'none'; $out.style.display = 'inline-block'; $done.style.display = 'none';
+        } else if (s === 'completed') {
+            $bdg.textContent = 'Day Complete'; $bdg.className = 'badge bg-primary';
+            $in.style.display = 'none'; $out.style.display = 'none'; $done.style.display = 'inline-block';
+        } else {
+            $bdg.textContent = 'Not Checked In'; $bdg.className = 'badge bg-secondary';
+            $in.style.display = 'inline-block'; $out.style.display = 'none'; $done.style.display = 'none';
+        }
+    }
+
+    function showErr(m) { $err.textContent = m; $err.classList.remove('d-none'); }
+    function clearErr()  { $err.classList.add('d-none'); $err.textContent = ''; }
+    function busy(b, sp, on) { b.disabled = on; sp.classList.toggle('d-none', !on); }
+
+    $in.onclick = async function () {
+        clearErr(); busy($in, $sIn, true);
+        try {
+            var r = await fetch('/Attendance/CheckIn', { method: 'POST' });
+            if (!r.ok) throw new Error('Check-in failed. Please try again.');
+            var d = null; try { d = await r.json(); } catch {}
+            var t = d && d.response && d.response.checkInTime ? d.response.checkInTime : null;
+            $ci.textContent = t ? fmt(t) : new Date().toLocaleTimeString();
+            setState('checkedIn'); startTimer(0);
+        } catch (e) { showErr(e.message); } finally { busy($in, $sIn, false); }
+    };
+
+    $out.onclick = async function () {
+        clearErr(); busy($out, $sOut, true);
+        try {
+            var r = await fetch('/Attendance/CheckOut', { method: 'POST' });
+            if (!r.ok) throw new Error('Check-out failed. Please try again.');
+            $co.textContent = new Date().toLocaleTimeString();
+            clearInterval(_t); setState('completed');
+        } catch (e) { showErr(e.message); } finally { busy($out, $sOut, false); }
+    };
+
+    (async function load() {
+        try {
+            var r = await fetch('/Attendance/TodayStatus');
+            var d = await r.json();
+            if (d.status === 'checkedIn') {
+                $ci.textContent = fmt(d.checkInTime); setState('checkedIn'); startTimer(d.secondsWorked || 0);
+            } else if (d.status === 'completed') {
+                $ci.textContent = fmt(d.checkInTime); $co.textContent = fmt(d.checkOutTime);
+                $wt.textContent = dur(d.secondsWorked || 0); setState('completed');
+            } else { setState('none'); }
+        } catch { setState('none'); }
+    })();
+})();
+</script>

@@ -1,0 +1,42 @@
+﻿@using Crayon.Entity.Common
+@using Crayon.Entity.Dto
+
+@model Result<TimesheetResponse>
+
+<h2>Timesheet Details</h2>
+
+<hr />
+
+<dl class="row">
+
+    <dt class="col-sm-3">Employee</dt>
+    <dd class="col-sm-9">
+        @Model.Response.EmployeeName
+    </dd>
+
+    <dt class="col-sm-3">Project</dt>
+    <dd class="col-sm-9">
+        @Model.Response.ProjectName
+    </dd>
+
+    <dt class="col-sm-3">Task</dt>
+    <dd class="col-sm-9">
+        @Model.Response.TaskName
+    </dd>
+
+    <dt class="col-sm-3">Hours Worked</dt>
+    <dd class="col-sm-9">
+        @Model.Response.HoursWorked
+    </dd>
+
+    <dt class="col-sm-3">Work Date</dt>
+    <dd class="col-sm-9">
+        @Model.Response.WorkDate.ToShortDateString()
+    </dd>
+
+    <dt class="col-sm-3">Progress</dt>
+    <dd class="col-sm-9">
+        @Model.Response.WorkDescription
+    </dd>
+
+</dl>

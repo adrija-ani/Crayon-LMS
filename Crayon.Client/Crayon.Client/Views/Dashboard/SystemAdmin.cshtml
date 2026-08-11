@@ -1,0 +1,79 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="dash-section-title">Overview</div>
+
+<div class="row g-3 mb-4">
+
+    <div class="col-6 col-lg-3">
+        <div class="stat-card">
+            <div class="stat-label">Employees</div>
+            <div class="stat-value">@(ViewBag.EmployeeCount ?? 0)</div>
+        </div>
+    </div>
+
+    <div class="col-6 col-lg-3">
+        <div class="stat-card">
+            <div class="stat-label">Departments</div>
+            <div class="stat-value">@(ViewBag.DepartmentCount ?? 0)</div>
+        </div>
+    </div>
+
+    <div class="col-6 col-lg-3">
+        <div class="stat-card">
+            <div class="stat-label">Projects</div>
+            <div class="stat-value">@(ViewBag.ProjectCount ?? 0)</div>
+        </div>
+    </div>
+
+    <div class="col-6 col-lg-3">
+        <div class="stat-card">
+            <div class="stat-label">Pending Leaves</div>
+            <div class="stat-value">@(ViewBag.PendingLeaveCount ?? 0)</div>
+        </div>
+    </div>
+
+</div>
+
+<div class="dash-section-title">Quick Access</div>
+
+<div class="row g-3">
+
+    <div class="col-6 col-lg-4">
+        <a asp-controller="Employee" asp-action="Index" class="quick-link">
+            Employees
+        </a>
+    </div>
+
+    <div class="col-6 col-lg-4">
+        <a asp-controller="Department" asp-action="Index" class="quick-link">
+            Departments
+        </a>
+    </div>
+
+    <div class="col-6 col-lg-4">
+        <a asp-controller="LeaveApplication" asp-action="Index" class="quick-link">
+            Leave Applications
+        </a>
+    </div>
+
+    <div class="col-6 col-lg-4">
+        <a asp-controller="Attendance" asp-action="Index" class="quick-link">
+            Attendance
+        </a>
+    </div>
+
+    <div class="col-6 col-lg-4">
+        <a asp-controller="Project" asp-action="Index" class="quick-link">
+            Projects
+        </a>
+    </div>
+
+    <div class="col-6 col-lg-4">
+        <a asp-controller="Holiday" asp-action="Index" class="quick-link">
+            Holidays
+        </a>
+    </div>
+
+</div>

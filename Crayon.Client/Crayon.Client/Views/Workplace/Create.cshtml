@@ -1,0 +1,31 @@
+﻿@model Crayon.Entity.Dto.WorkplaceRequest
+
+<h2>Add Workplace</h2>
+
+<form asp-action="Create">
+
+    <div class="mb-3">
+        <label class="form-label">
+            Name
+        </label>
+
+        <input asp-for="Name"
+               class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">
+            Address
+        </label>
+
+        <textarea asp-for="Address"
+                  class="form-control">
+        </textarea>
+    </div>
+
+    <button type="submit"
+            class="btn btn-success">
+        Save
+    </button>
+
+</form>

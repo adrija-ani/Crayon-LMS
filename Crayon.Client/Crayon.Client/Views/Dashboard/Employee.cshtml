@@ -1,0 +1,51 @@
+@{
+    ViewData["Title"] = "My Dashboard";
+}
+
+<div class="dash-greeting">
+    <div class="greet-role">Employee</div>
+    <h2 id="greetMsg">Good Day</h2>
+    <p class="greet-sub">Here is your workspace for today.</p>
+</div>
+
+@await Html.PartialAsync("_AttendanceWidget")
+
+<div class="row g-3 mb-4">
+    <div class="col-6 col-lg-4">
+        <div class="stat-card">
+            <div class="stat-label">Pending Leaves</div>
+            <div class="stat-value" style="color:#D97706;">@(ViewBag.PendingLeaveCount ?? 0)</div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-4">
+        <a asp-controller="LeaveApplication" asp-action="MyLeaves" class="stat-card stat-card-link">
+            <div class="stat-label">My Leave Requests</div>
+            <div class="stat-value text-primary" style="font-size:1.5rem;">View All</div>
+        </a>
+    </div>
+    <div class="col-6 col-lg-4">
+        <a asp-controller="Holiday" asp-action="Index" class="stat-card stat-card-link">
+            <div class="stat-label">Upcoming Holidays</div>
+            <div class="stat-value text-success" style="font-size:1.5rem;">View</div>
+        </a>
+    </div>
+</div>
+
+<p class="dash-section-title">Quick Links</p>
+<div class="row g-3">
+    <div class="col-6 col-lg-4">
+        <a asp-controller="LeaveApplication" asp-action="Apply" class="quick-link">Apply Leave</a>
+    </div>
+    <div class="col-6 col-lg-4">
+        <a asp-controller="Attendance" asp-action="MyAttendance" class="quick-link">Attendance History</a>
+    </div>
+    <div class="col-6 col-lg-4">
+        <a asp-controller="Timesheet" asp-action="MyTimesheets" class="quick-link">My Timesheets</a>
+    </div>
+</div>
+
+<script>
+    var h = new Date().getHours();
+    document.getElementById('greetMsg').textContent =
+        h < 12 ? 'Good Morning!' : h < 17 ? 'Good Afternoon!' : 'Good Evening!';
+</script>

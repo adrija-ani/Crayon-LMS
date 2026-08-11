@@ -1,0 +1,58 @@
+@using Crayon.Entity.Common
+@using Crayon.Entity.Dto
+@model Result<List<LeaveBalanceResponse>>
+
+@{
+    ViewData["Title"] = "Leave Balances";
+}
+
+<div class="page-header">
+    <h2>Leave Balances</h2>
+    <a asp-action="Create" class="btn btn-primary">Add Balance</a>
+</div>
+
+<div class="card">
+    <div class="card-body p-0">
+        <table class="table table-hover datatable w-100">
+            <thead>
+                <tr>
+                    <th>Employee</th>
+                    <th>Leave Type</th>
+                    <th>Available Days</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model?.Response != null)
+                {
+                    foreach (var item in Model.Response)
+                    {
+                        <tr>
+                            <td>@item.EmployeeName</td>
+                            <td>@item.LeaveName</td>
+                            <td>@item.AvailableDays</td>
+                            <td>
+                                <a asp-action="Details"
+                                   asp-route-id="@item.LeaveBalanceId"
+                                   class="btn btn-info btn-sm">
+                                    View
+                                </a>
+                                <a asp-action="Edit"
+                                   asp-route-id="@item.LeaveBalanceId"
+                                   class="btn btn-warning btn-sm">
+                                    Edit
+                                </a>
+                                <a asp-action="Delete"
+                                   asp-route-id="@item.LeaveBalanceId"
+                                   class="btn btn-danger btn-sm confirm-delete"
+                                   data-name="@item.LeaveName" ">
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

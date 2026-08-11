@@ -1,0 +1,98 @@
+﻿@model Crayon.Entity.Dto.TimesheetRequest
+
+<h2>Today's Timesheet</h2>
+
+<form asp-action="Create" method="post">
+
+    <div class="mb-3">
+        <label>Date</label>
+        <input asp-for="WorkDate"
+               class="form-control"
+               readonly />
+    </div>
+
+    <div class="mb-3">
+        <label>Project</label>
+        <select asp-for="ProjectId"
+                asp-items="ViewBag.Projects"
+                id="projectDropdown"
+                class="form-control">
+
+            <option value="">
+                Select Project
+            </option>
+
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label>Task</label>
+        <select asp-for="ProjectTaskId"
+                id="taskDropdown"
+                class="form-control">
+
+            <option value="">
+                Select Task
+            </option>
+
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label>Hours Worked</label>
+        <input asp-for="HoursWorked"
+               class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Today's Progress *</label>
+
+        <textarea asp-for="WorkDescription"
+                  rows="5"
+                  class="form-control"
+                  required>
+        </textarea>
+    </div>
+
+    <button type="submit"
+            class="btn btn-primary">
+        Submit
+    </button>
+
+</form>
+
+@section Scripts
+{
+    <script>
+
+        $("#projectDropdown").change(function() {
+            var projectId = $(this).val();
+
+            $("#taskDropdown").empty();
+
+            $("#taskDropdown").append(
+                '<option value="">Select Task</option>'
+            );
+
+            if (projectId) {
+                $.get(
+                    '/Timesheet/GetTasksByProject',
+                    { projectId: projectId },
+
+                    function(data) {
+                        $.each(data, function(index, item) {
+                            $("#taskDropdown").append(
+                                '<option value="' +
+                                item.projectTaskId +
+                                '">' +
+                                item.taskName +
+                                '</option>'
+                            );
+                        });
+                    }
+                );
+            }
+        });
+
+    </script>
+}

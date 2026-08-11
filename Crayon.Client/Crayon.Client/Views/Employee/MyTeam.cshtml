@@ -1,0 +1,56 @@
+@using Crayon.Entity.Common
+@using Crayon.Entity.Dto
+@model Result<List<EmployeeResponse>>
+
+@{
+    ViewData["Title"] = "My Team";
+}
+
+<div class="page-header">
+    <h2>My Team</h2>
+</div>
+
+<div class="card">
+    <div class="card-body p-0">
+        <table class="table table-hover datatable w-100">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Department</th>
+                    <th>Designation</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model?.Response != null)
+                {
+                    foreach (var item in Model.Response)
+                    {
+                        <tr>
+                            <td>@item.EmployeeCode</td>
+                            <td>@item.FullName</td>
+                            <td>@item.Email</td>
+                            <td>@item.DepartmentName</td>
+                            <td>@item.DesignationName</td>
+                            <td>
+                                <a asp-controller="Employee"
+                                   asp-action="Details"
+                                   asp-route-id="@item.EmployeeId"
+                                   class="btn btn-info btn-sm">
+                                    View
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@if (Model?.Response == null || !Model.Response.Any())
+{
+    <div class="alert alert-info mt-3">No team members found.</div>
+}

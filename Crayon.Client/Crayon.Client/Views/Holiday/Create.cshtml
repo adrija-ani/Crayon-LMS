@@ -1,0 +1,36 @@
+﻿@model Crayon.Entity.Dto.HolidayRequest
+
+<h2>Add Holiday</h2>
+
+<form asp-action="Create">
+
+    <div class="mb-3">
+        <label>Holiday Name</label>
+        <input asp-for="HolidayName"
+               class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Holiday Date</label>
+        <input asp-for="HolidayDate"
+               type="date"
+               class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Country</label>
+        <input asp-for="Country"
+               class="form-control" />
+    </div>
+
+    <button type="submit"
+            class="btn btn-success">
+        Save
+    </button>
+
+    <a asp-action="Index"
+       class="btn btn-secondary">
+        Cancel
+    </a>
+
+</form>

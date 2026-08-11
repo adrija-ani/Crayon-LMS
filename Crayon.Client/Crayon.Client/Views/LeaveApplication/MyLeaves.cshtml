@@ -1,0 +1,78 @@
+@using Crayon.Entity.Common
+@using Crayon.Entity.Dto
+
+@model Result<List<LeaveApplicationResponse>>
+
+@{
+    ViewData["Title"] = "My Leave Applications";
+}
+
+<div class="page-header">
+    <h2>My Leave Applications</h2>
+    <a asp-action="Apply" class="btn btn-primary">Apply Leave</a>
+</div>
+
+<div class="card">
+    <div class="card-body p-0">
+        <table class="table table-hover datatable w-100">
+            <thead>
+                <tr>
+                    <th>Leave Type</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Days</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model?.Response != null)
+                {
+                    foreach (var item in Model.Response)
+                    {
+                        <tr>
+                            <td>@item.LeaveName</td>
+                            <td>@item.FromDate.ToString("dd MMM yyyy")</td>
+                            <td>@item.ToDate.ToString("dd MMM yyyy")</td>
+                            <td>@item.TotalDays</td>
+                            <td>
+                                @if (item.Status == "Approved")
+                                {
+                                    <span class="badge bg-success">Approved</span>
+                                }
+                                else if (item.Status == "Rejected")
+                                {
+                                    <span class="badge bg-danger">Rejected</span>
+                                }
+                                else if (item.Status == "Cancelled")
+                                {
+                                    <span class="badge bg-secondary">Cancelled</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                }
+                            </td>
+                            <td>
+                                <a asp-action="Details"
+                                   asp-route-id="@item.LeaveApplicationId"
+                                   class="btn btn-info btn-sm">
+                                    View
+                                </a>
+                                @if (item.Status == "Pending")
+                                {
+                                    <a asp-action="Cancel"
+                                       asp-route-id="@item.LeaveApplicationId"
+                                       class="btn btn-danger btn-sm"
+                                       onclick="return confirm('Cancel this leave application?')">
+                                        Cancel
+                                    </a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

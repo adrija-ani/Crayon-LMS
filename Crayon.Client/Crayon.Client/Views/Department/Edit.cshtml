@@ -1,0 +1,26 @@
+﻿@model Crayon.Entity.Dto.DepartmentResponse
+
+<h2>Edit Department</h2>
+
+<form asp-action="Edit"
+      asp-route-id="@Model.DepartmentId"
+      method="post">
+
+    <div class="mb-3">
+
+        <label class="form-label">
+            Department Name
+        </label>
+
+        <input name="DepartmentName"
+               value="@Model.DepartmentName"
+               class="form-control" />
+
+    </div>
+
+    <button type="submit"
+            class="btn btn-primary">
+        Update
+    </button>
+
+</form>

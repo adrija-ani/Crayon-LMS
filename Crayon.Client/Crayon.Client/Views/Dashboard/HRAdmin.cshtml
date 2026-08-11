@@ -1,0 +1,66 @@
+@{
+    ViewData["Title"] = "HR Dashboard";
+}
+
+<div class="dash-greeting">
+    <div class="greet-role">HR Administrator</div>
+    <h2 id="greetMsg">Good Day</h2>
+    <p class="greet-sub">Manage employees, attendance and leave applications.</p>
+</div>
+
+@await Html.PartialAsync("_AttendanceWidget")
+
+<div class="row g-3 mb-4">
+    <div class="col-6 col-lg-4">
+        <div class="stat-card">
+            <div class="stat-label">Total Employees</div>
+            <div class="stat-value text-primary">@(ViewBag.EmployeeCount ?? 0)</div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-4">
+        <div class="stat-card">
+            <div class="stat-label">Pending Leave Applications</div>
+            <div class="stat-value" style="color:#D97706;">@(ViewBag.PendingLeaveCount ?? 0)</div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-4">
+        <a asp-controller="LeaveApplication" asp-action="Index" class="stat-card stat-card-link">
+            <div class="stat-label">Leave Applications</div>
+            <div class="stat-value" style="font-size:1.5rem;color:#16a34a;">Review All</div>
+        </a>
+    </div>
+</div>
+
+<p class="dash-section-title">Quick Links</p>
+<div class="row g-3">
+    <div class="col-6 col-lg-3">
+        <a asp-controller="Employee" asp-action="Index" class="quick-link">Employees</a>
+    </div>
+    <div class="col-6 col-lg-3">
+        <a asp-controller="Attendance" asp-action="Index" class="quick-link">Attendance</a>
+    </div>
+    <div class="col-6 col-lg-3">
+        <a asp-controller="LeaveApplication" asp-action="Index" class="quick-link">Leave Applications</a>
+    </div>
+    <div class="col-6 col-lg-3">
+        <a asp-controller="Holiday" asp-action="Index" class="quick-link">Holidays</a>
+    </div>
+    <div class="col-6 col-lg-3">
+        <a asp-controller="LeaveApplication" asp-action="Apply" class="quick-link">Apply Leave</a>
+    </div>
+    <div class="col-6 col-lg-3">
+        <a asp-controller="LeaveApplication" asp-action="MyLeaves" class="quick-link">My Leaves</a>
+    </div>
+    <div class="col-6 col-lg-3">
+        <a asp-controller="Attendance" asp-action="MyAttendance" class="quick-link">My Attendance</a>
+    </div>
+    <div class="col-6 col-lg-3">
+        <a asp-controller="LeaveBalance" asp-action="Index" class="quick-link">Leave Balances</a>
+    </div>
+</div>
+
+<script>
+    var h = new Date().getHours();
+    document.getElementById('greetMsg').textContent =
+        h < 12 ? 'Good Morning!' : h < 17 ? 'Good Afternoon!' : 'Good Evening!';
+</script>

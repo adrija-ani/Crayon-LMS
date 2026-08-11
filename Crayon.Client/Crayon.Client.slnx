@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="Crayon.Client/Crayon.Client.csproj" />
+  <Project Path="Crayon.Entity/Crayon.Entity.csproj" />
+  <Project Path="Crayon.Services/Crayon.Services.csproj" />
+</Solution>

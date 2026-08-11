@@ -1,0 +1,54 @@
+@model Crayon.Entity.Common.Result<List<Crayon.Entity.Dto.TimesheetResponse>>
+
+@{
+    ViewData["Title"] = "Timesheets";
+}
+
+<div class="page-header">
+    <h2>Timesheets</h2>
+    <div class="d-flex gap-2">
+        <a asp-action="MyTimesheets" class="btn btn-secondary">My Timesheets</a>
+        <a asp-action="Create" class="btn btn-primary">Log Time</a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body p-0">
+        <table class="table table-hover datatable w-100">
+            <thead>
+                <tr>
+                    <th>Employee</th>
+                    <th>Project</th>
+                    <th>Task</th>
+                    <th>Hours</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model?.Response != null)
+                {
+                    foreach (var item in Model.Response)
+                    {
+                        <tr>
+                            <td>@item.EmployeeName</td>
+                            <td>@item.ProjectName</td>
+                            <td>@item.TaskName</td>
+                            <td>@item.HoursWorked</td>
+                            <td>@item.WorkDate.ToString("dd MMM yyyy")</td>
+                            <td>@item.WorkDescription</td>
+                            <td>
+                                <a asp-action="Details"
+                                   asp-route-id="@item.TimesheetId"
+                                   class="btn btn-info btn-sm">
+                                    View
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
