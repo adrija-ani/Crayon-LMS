@@ -250,7 +250,7 @@ namespace Crayon.Services.Repository.Implementation
                     result.Error.Add(new Errors
                     {
                         ErrorCode = 404,
-                        ErrorMessage = "Employee not found"
+                        ErrorMessage = "Employee not found."
                     });
 
                     return result;
